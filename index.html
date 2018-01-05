@@ -3,9 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>テストぞ</title>
 </head>
-<body>
-  <h1>我々は宇宙人だぞ！</h1>
+<body style="background-color:gray">
+  <h1>テストだぞ！</h1>
+  <p>横 320px 縦 568px font 10pt</p>
+  <canvas id="can"></canvas><br>
+  <button id="go" onclick="go()">押せ</button>
+  <script>
+  function go() {
+    draw("シ63b ミュンヒハウゼン症候群 新刊1部ずつ 2k", 320, 568, 10);
+  }
+  function draw(text, w, h, pt) {
+    const c = document.getElementById('can');
+    // サイズ設定
+    c.width = w;
+    c.height = h;
+    const ctx = c.getContext('2d');
+    // 白背景
+    ctx.fillStyle = 'white';
+    ctx.fillRect(0, 0, w, h);
+    // 文字設定
+    ctx.font = `${pt}pt meiryo`;
+    ctx.textBaseline = 'hanging';
+    ctx.fillStyle = 'black';
+    const lineHeight = ctx.measureText('あ').width + (ctx.measureText('あ').width/3);
+    // 文字描画
+    text.split('\n').forEach((t, i) => {
+      ctx.fillText(t, 5, 5 + lineHeight * i);
+    });
+  }
+  </script>
 </body>
 </html>
