@@ -7,15 +7,75 @@
 </head>
 <body style="background-color:gray">
   <h1>テストだぞ！</h1>
-  <p>横 320px 縦 568px font 10pt</p>
-  <canvas id="can"></canvas><br>
+  <p>横 320px 縦 568px font 10pt 上部空白 190px</p>
+  <canvas id="can" style="background-color:white"></canvas><br>
   <button id="go" onclick="go()">押せ</button>
   <button id="save" onclick="saveCanvas();">保存</button>
+  <pre>
+  データ↓
+  [
+    {
+      space: 'え19b FREE STYLE',
+      item: '1部 500'
+    },
+    {
+      space: 'あ58b 御茶ノ水木人会',
+      item: '3部 1500?'
+    },
+    {
+      space: 'あ57a オレンジミル',
+      item: '2部 1k'
+    },
+    {
+      space: 'あ59b あじのひらき',
+      item: '新刊2種2部 既SAURY2部 2k'
+    },
+    {
+      space: 'も01b GRINP',
+      item: '新刊2種3部 3k'
+    }
+  ]
+  </pre>
   <script>
+  var test = [
+    {
+      space: 'え19b FREE STYLE',
+      item: '1部 500'
+    },
+    {
+      space: 'あ58b 御茶ノ水木人会',
+      item: '3部 1500?'
+    },
+    {
+      space: 'あ57a オレンジミル',
+      item: '2部 1k'
+    },
+    {
+      space: 'あ59b あじのひらき',
+      item: '新刊2種2部 既SAURY2部 2k'
+    },
+    {
+      space: 'も01b GRINP',
+      item: '新刊2種3部 3k'
+    }
+  ]
   function go() {
-    draw("シ63b ミュンヒハウゼン症候群 新刊1部ずつ 2k", 320, 568, 10);
+    draw(test, 320, 568, 10, 190);
   }
-  function draw(text, w, h, pt) {
+  function makeText(datas, ctx, width) {
+    var text = '';
+    datas.forEach(data => {
+      var spaceWidth = ctx.measureText(data.space).width;
+      var itemWidth = ctx.measureText(data.item).width;
+      if (spaceWidth > width || itemWidth > width) {
+        text += data.space + '\n' + data.item + '\n';
+      } else {
+        text += data.space + ' ' + data.item + '\n';
+      }
+    });
+    return text.replace(/\n$/, '');
+  }
+  function draw(datas, w, h, pt, marginTop) {
     const c = document.getElementById('can');
     // サイズ設定
     c.width = w;
@@ -30,8 +90,8 @@
     ctx.fillStyle = 'black';
     const lineHeight = ctx.measureText('あ').width + (ctx.measureText('あ').width/3);
     // 文字描画
-    text.split('\n').forEach((t, i) => {
-      ctx.fillText(t, 5, 5 + lineHeight * i);
+    makeText(datas, ctx, w).split('\n').forEach((t, i) => {
+      ctx.fillText(t, 5, marginTop + lineHeight * i);
     });
   }
   function saveCanvas(){
