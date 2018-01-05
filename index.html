@@ -10,10 +10,10 @@
   <p>横 320px 縦 568px font 10pt</p>
   <canvas id="can"></canvas><br>
   <button id="go" onclick="go()">押せ</button>
+  <button id="save" onclick="saveCanvas();">保存</button>
   <script>
   function go() {
     draw("シ63b ミュンヒハウゼン症候群 新刊1部ずつ 2k", 320, 568, 10);
-    saveCanvas();
   }
   function draw(text, w, h, pt) {
     const c = document.getElementById('can');
